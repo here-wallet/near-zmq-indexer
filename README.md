@@ -31,29 +31,16 @@ cargo run --release -- --home-dir ~/.near/testnet init --chain-id testnet --down
 
 ```bash
 mkdir ~/.near/mainnet/data
+mkdir /mnt/tmp/near/mainnet/data
 cd ~/.near/mainnet/data
 
 aws s3 --no-sign-request cp s3://near-protocol-public/backups/mainnet/rpc/latest .
 
-aws s3 --no-sign-request cp s3://near-protocol-public/backups/testnet/rpc/latest .
-
 
 LATEST=$(cat latest)
 
-aws s3 --no-sign-request cp --no-sign-request --recursive s3://near-protocol-public/backups/testnet/rpc/$LATEST . 
-
-
 aws s3 --no-sign-request cp --no-sign-request --recursive s3://near-protocol-public/backups/mainnet/rpc/$LATEST . 
 
-aws s3 ls s3://near-protocol-public/backups/mainnet/rpc --recursive --human-readable --summarize
-
-aws s3 ls s3://near-protocol-public/backups/mainnet/archive/2022-08-05T23:00:26Z --recursive --human-readable --summarize
-
-
-aws s3 --no-sign-request cp s3://near-protocol-public/backups/mainnet/archive/2022-08-05T23:00:26Z
-
-
-2022-06-02 04:06:04   64.3 MiB backups/mainnet/rpc/2022-06-02T11:00:44Z/5454687.sst
 ```
 
 
