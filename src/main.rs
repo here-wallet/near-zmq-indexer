@@ -42,7 +42,7 @@ fn main() {
         SubCommand::Run(args) => {
             tracing::info!(
                 target: INDEXER,
-                "NEAR Lake v{} starting...",
+                "NEAR Indexer v{} starting...",
                 env!("CARGO_PKG_VERSION")
             );
 
@@ -147,9 +147,7 @@ async fn listen_blocks(
     mut stream: tokio::sync::mpsc::Receiver<near_indexer_primitives::StreamerMessage>,
     stats: Arc<Mutex<Stats>>,
 ) {
-    let mut url = "tcp://0.0.0.0:".to_owned();
-    url.push_str(&"5656");
-    println!("url: {}", url);
+    let url = "tcp://0.0.0.0:9555".to_owned();
 
     let mut zmq = async_zmq::xpublish(url.as_str()).unwrap().bind().unwrap();
 
@@ -172,7 +170,7 @@ async fn listen_blocks(
 
 fn init_tracing() {
     let mut env_filter = EnvFilter::new(
-        "tokio_reactor=info,near=info,stats=info,telemetry=info,indexer=info,near_lake=info,aggregated=info",
+        "tokio_reactor=info,near=info,stats=info,telemetry=info,indexer=info,near_zmq=info,aggregated=info",
     );
 
     if let Ok(rust_log) = std::env::var("RUST_LOG") {

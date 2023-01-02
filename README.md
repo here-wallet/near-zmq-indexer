@@ -73,12 +73,12 @@ Run indexer
 
 ```
 
-docker run  --name near-mainnet -d --restart unless-stopped -p 3030:3030 -p 9555:9555 -p 24567:24567 -v $HOME/.near/mainnet/:/near/mainnet/  near-zmq-indexer cargo run --release -- -z 9555 --home /near/mainnet run
+docker run  --name near-mainnet -d --restart unless-stopped -p 3030:3030 -p 9555:9555 -p 24567:24567 -v $HOME/.near/mainnet/:/near/mainnet/  near-zmq-indexer cargo run --release -- --home /near/mainnet run
 
 
 # Tp parse all from block-height
 
-docker run  --name near-mainnet -d --restart unless-stopped -p 3030:3030 -p 9555:9555 -p 24567:24567 -v $NEAR_HOME:/near/mainnet/  near-zmq-indexer cargo run --release -- -z 9555 --home /near/mainnet --block-height 0 run
+docker run  --name near-mainnet -d --restart unless-stopped -p 3030:3030 -p 9555:9555 -p 24567:24567 -v $NEAR_HOME:/near/mainnet/  near-zmq-indexer cargo run --release -- --home /near/mainnet --block-height 0 run
 
 ```
 

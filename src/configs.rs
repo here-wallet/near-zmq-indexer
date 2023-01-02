@@ -1,6 +1,6 @@
 use clap::Parser;
 
-/// NEAR Lake
+/// NEAR ZMQ Indexer
 /// Watches for stream of blocks from the chain and puts it in S3 bucket
 #[derive(Parser, Clone, Debug)]
 #[clap(
