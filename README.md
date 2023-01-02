@@ -19,9 +19,9 @@ sudo apt-get install clang libzmq3-dev libssl-dev pkg-config libpq-dev build-ess
 # Init genesis
 git clone 
 cd indexer-zmq
-cargo run --release -- --home-dir ~/.near/mainnet init --chain-id mainnet --download-config  --download-genesis
+cargo run --release -- --home ~/.near/mainnet init --chain-id mainnet --download-config  --download-genesis
 
-cargo run --release -- --home-dir ~/.near/testnet init --chain-id testnet --download-config  --download-genesis
+cargo run --release -- --home ~/.near/testnet init --chain-id testnet --download-config  --download-genesis
 
 
 ```
@@ -47,13 +47,13 @@ aws s3 --no-sign-request cp --no-sign-request --recursive s3://near-protocol-pub
 ### 3.1 Run
 
 - `-z` - zmq port
-- `--home-dir` - path to folder with config and near blockchein data
+- `--home` - path to folder with config and near blockchein data
 - `--block-height` - "0" if u want send to zmq all transactions from 0 block
 - to edit RPC port change it in ` ~/.near/testnet/config.json`
 ```bash
 
-cargo run --release -- --home-dir ~/.near/mainnet/  --block-height 0 -z 9555  run
-cargo run --release -- --home-dir ~/.near/mainnet/ -z 9555  run
+cargo run --release -- --home ~/.near/mainnet/  --block-height 0 -z 9555  run
+cargo run --release -- --home ~/.near/mainnet/ -z 9555  run
 
 ```
 
@@ -66,20 +66,20 @@ Init genesis
 docker build -t near-zmq-indexer .
 
 
-docker run  --name near-init -v /root/.near/mainnet/:/near/mainnet/  near-zmq-indexer cargo run --release -- --home-dir /near/mainnet init
+docker run  --name near-init -v /root/.near/mainnet/:/near/mainnet/  near-zmq-indexer cargo run --release -- --home /near/mainnet init
 ```
 
 After init genesis and download data u can run indexer with docker (indexer folder)
 
 ```
 
-docker run  --name near-mainnet -d --restart unless-stopped -p 3030:3030 -p 9555:9555 -p 24567:24567 -v $HOME/.near/mainnet/:/near/mainnet/  near-zmq-indexer cargo run --release -- -z 9555 --home-dir /near/mainnet run
+docker run  --name near-mainnet -d --restart unless-stopped -p 3030:3030 -p 9555:9555 -p 24567:24567 -v $HOME/.near/mainnet/:/near/mainnet/  near-zmq-indexer cargo run --release -- -z 9555 --home /near/mainnet run
 
-docker run  --name near-mainnet -d --restart unless-stopped -p 3030:3030 -p 9555:9555 -p 24567:24567 -v /root/.near/mainnet/:/near/mainnet/  near-zmq-indexer cargo run --release -- -z 9555 --home-dir /near/mainnet --block-height 0 run
+docker run  --name near-mainnet -d --restart unless-stopped -p 3030:3030 -p 9555:9555 -p 24567:24567 -v /root/.near/mainnet/:/near/mainnet/  near-zmq-indexer cargo run --release -- -z 9555 --home /near/mainnet --block-height 0 run
 
 
 # for testnet
 
-docker run  --name near-testnet -d --restart unless-stopped -p 3031:3030 -p 9556:9555 -p 24568:24568 -v /root/.near/testnet/:/near/mainnet/  near-zmq-indexer cargo run --release -- -z 9555 --home-dir /near/mainnet run
+docker run  --name near-testnet -d --restart unless-stopped -p 3031:3030 -p 9556:9555 -p 24568:24568 -v /root/.near/testnet/:/near/mainnet/  near-zmq-indexer cargo run --release -- -z 9555 --home /near/mainnet run
 
 ```
