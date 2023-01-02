@@ -51,8 +51,7 @@ aws s3 --no-sign-request cp --no-sign-request --recursive s3://near-protocol-pub
 
 cargo run --release -- --home /near/mainnet init --chain-id mainnet --download-config	--download-genesis
 
-cargo run --release -- --home ~/.near/mainnet/  --block-height 0 -z 9555  run
-cargo run --release -- --home ~/.near/mainnet/ -z 9555  run
+cargo run --release -- --home ~/.near/mainnet/ run sync-from-latest
 
 ```
 
@@ -73,12 +72,7 @@ Run indexer
 
 ```
 
-docker run  --name near-mainnet -d --restart unless-stopped -p 3030:3030 -p 9555:9555 -p 24567:24567 -v $HOME/.near/mainnet/:/near/mainnet/  near-zmq-indexer cargo run --release -- --home /near/mainnet run
-
-
-# Tp parse all from block-height
-
-docker run  --name near-mainnet -d --restart unless-stopped -p 3030:3030 -p 9555:9555 -p 24567:24567 -v $NEAR_HOME:/near/mainnet/  near-zmq-indexer cargo run --release -- --home /near/mainnet --block-height 0 run
+docker run  --name near-mainnet -d --restart unless-stopped -p 3030:3030 -p 9555:9555 -p 24567:24567 -v $NEAR_HOME:/near/mainnet/  near-zmq-indexer cargo run --release -- --home /near/mainnet run  sync-from-latest
 
 ```
 
