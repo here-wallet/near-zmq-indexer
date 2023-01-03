@@ -89,7 +89,7 @@ Commands to run NEAR Indexer
 
 
 
-## Proces events on pyhon
+## Event processing on pyhon
 
 `pip install pyzmq==22.3.0`
 
