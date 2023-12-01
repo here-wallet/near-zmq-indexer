@@ -49,6 +49,7 @@ impl RunArgs {
             } else {
                 near_indexer::AwaitForNodeSyncedEnum::WaitForFullSync
             },
+            validate_genesis: false,
         }
     }
 }
