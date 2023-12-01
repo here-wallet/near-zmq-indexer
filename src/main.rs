@@ -1,8 +1,8 @@
 use std::sync::Arc;
 
-use futures::SinkExt;
 use clap::Parser;
 use configs::{Opts, SubCommand};
+use futures::SinkExt;
 use tokio::sync::Mutex;
 use tracing_subscriber::EnvFilter;
 
@@ -60,11 +60,7 @@ fn main() {
 
                 actix::spawn(logger(Arc::clone(&stats), view_client));
 
-                listen_blocks(
-                    stream,
-                    Arc::clone(&stats),
-                )
-                .await;
+                listen_blocks(stream, Arc::clone(&stats)).await;
 
                 actix::System::current().stop();
             });
@@ -72,31 +68,25 @@ fn main() {
         }
         SubCommand::Init(config) => near_indexer::init_configs(
             &home_dir,
-            config.chain_id.as_ref().map(AsRef::as_ref),
-            config.account_id.map(|account_id_string| {
-                near_indexer::near_primitives::types::AccountId::try_from(account_id_string)
-                    .expect("Received accound_id is not valid")
-            }),
-            config.test_seed.as_ref().map(AsRef::as_ref),
+            None,
+            None,
+            None,
             config.num_shards,
             config.fast,
-            config.genesis.as_ref().map(AsRef::as_ref),
-            config.download_genesis,
-            config.download_genesis_url.as_ref().map(AsRef::as_ref),
-            config.download_config,
-            config.download_config_url.as_ref().map(AsRef::as_ref),
-            config.boot_nodes.as_ref().map(AsRef::as_ref),
             None,
-            None
+            false,
+            None,
+            None,
+            false,
+            config.download_config_url.as_ref().map(AsRef::as_ref),
+            None,
+            None,
         )
         .expect("Failed to initialize the node config files"),
     }
 }
 
-async fn logger(
-    stats: Arc<Mutex<Stats>>,
-    view_client: actix::Addr<near_client::ViewClientActor>,
-) {
+async fn logger(stats: Arc<Mutex<Stats>>, view_client: actix::Addr<near_client::ViewClientActor>) {
     let interval_secs = 10;
     let mut prev_blocks_processed_count: u64 = 0;
 
@@ -158,14 +148,14 @@ async fn listen_blocks(
             zmq.send(vec![dat.as_str()]).await.unwrap();
         }
         let block_height = streamer_message.block.header.height;
-            let mut stats_lock = stats.lock().await;
-            stats_lock.block_heights_processing.insert(block_height);
-            drop(stats_lock);
-            let mut stats_lock = stats.lock().await;
-            stats_lock.block_heights_processing.remove(&block_height);
-            stats_lock.blocks_processed_count += 1;
-            stats_lock.last_processed_block_height = block_height;
-            drop(stats_lock);
+        let mut stats_lock = stats.lock().await;
+        stats_lock.block_heights_processing.insert(block_height);
+        drop(stats_lock);
+        let mut stats_lock = stats.lock().await;
+        stats_lock.block_heights_processing.remove(&block_height);
+        stats_lock.blocks_processed_count += 1;
+        stats_lock.last_processed_block_height = block_height;
+        drop(stats_lock);
     }
 }
 
