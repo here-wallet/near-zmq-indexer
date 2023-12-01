@@ -87,6 +87,7 @@ fn main() {
             config.download_config_url.as_ref().map(AsRef::as_ref),
             config.boot_nodes.as_ref().map(AsRef::as_ref),
             config.max_gas_burnt_view,
+            None
         )
         .expect("Failed to initialize the node config files"),
     }
