@@ -4399,6 +4399,7 @@ dependencies = [
  "near-client",
  "near-indexer",
  "near-indexer-primitives",
+ "near-primitives",
  "openssl-probe",
  "serde",
  "serde_json",
