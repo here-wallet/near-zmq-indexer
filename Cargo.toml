@@ -27,7 +27,7 @@ tracing-subscriber = "0.2.4"
 zmq = "0.9.2"
 async_zmq = "0.2.0"
 
-near-indexer = { git = "https://github.com/near/nearcore", rev = "b0c5d14557b0e24ee8f4ffcc293963b8ccf633a6" }
-near-primitives = { git = "https://github.com/near/nearcore", rev = "b0c5d14557b0e24ee8f4ffcc293963b8ccf633a6" }
-near-indexer-primitives = { git = "https://github.com/near/nearcore", rev = "b0c5d14557b0e24ee8f4ffcc293963b8ccf633a6" }
-near-client = { git = "https://github.com/near/nearcore", rev = "b0c5d14557b0e24ee8f4ffcc293963b8ccf633a6" }
+near-indexer = { git = "https://github.com/near/nearcore", rev = "f97e1ab46de694504ce3baeea7e0f724f1658b5f" }
+near-indexer-primitives = { git = "https://github.com/near/nearcore", rev = "f97e1ab46de694504ce3baeea7e0f724f1658b5f" }
+near-client = { git = "https://github.com/near/nearcore", rev = "f97e1ab46de694504ce3baeea7e0f724f1658b5f" }
+near-o11y = { git = "https://github.com/near/nearcore", rev = "f97e1ab46de694504ce3baeea7e0f724f1658b5f" }
