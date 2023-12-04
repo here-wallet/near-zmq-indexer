@@ -1,4 +1,4 @@
-FROM rust
+FROM rust:1.71
 
 RUN apt update  -y
 RUN apt upgrade  -y

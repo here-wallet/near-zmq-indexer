@@ -52,14 +52,11 @@ fn main() {
                 let indexer = near_indexer::Indexer::new(indexer_config)
                     .expect("Failed to initialize the Indexer");
 
-                // Regular indexer process starts here
                 let stream = indexer.streamer();
                 let view_client = indexer.client_actors().0;
-
                 let stats: Arc<Mutex<Stats>> = Arc::new(Mutex::new(Stats::new()));
 
                 actix::spawn(logger(Arc::clone(&stats), view_client));
-
                 listen_blocks(stream, Arc::clone(&stats)).await;
 
                 actix::System::current().stop();
